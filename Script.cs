@@ -7,7 +7,7 @@ namespace CustomCodeTestEnv {
 
 
     //C# custom code with PowerApps custom connector
-    public partial class Script: ScriptBase {
+    public class Script: ScriptBase {
 
         public override async Task<HttpResponseMessage> ExecuteAsync() {
 
