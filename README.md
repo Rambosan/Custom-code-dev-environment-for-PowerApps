@@ -1,8 +1,8 @@
 # CustomCodeTestEnv
-C# Custom Code test environment of Power Apps Custom Connector.
+C# Custom Code development or test environment in Power Apps Custom Connector.
 
 Power Appsのカスタムコネクタに登場したC#カスタムコードの開発・テスト環境。
-.NET Core C#8.0の環境。
+.NET Core3.1 C#8.0の環境。
 
 Script.csの内容をカスタムコードに貼り付けて保存します。
 
