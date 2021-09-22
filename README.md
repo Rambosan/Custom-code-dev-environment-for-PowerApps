@@ -14,10 +14,33 @@ Script.csの内容をカスタムコードに貼り付けて保存します。
 ![image](https://user-images.githubusercontent.com/42938266/132376553-14535ace-5461-455c-977b-79aa33ba7db5.png)
 
 
-How to use
+# How to use
 
 1. Coding Script Class with ExecuteAsync method.
-![image](https://user-images.githubusercontent.com/42938266/134378243-19611147-ae85-4b62-8c2e-1c4736d26607.png)
+```cs
+            var contentAsJson = JObject.Parse(await Context.Request.Content.ReadAsStringAsync().ConfigureAwait(false));
+
+            // Set the content
+            // Initialize a new JObject and call .ToString() to get the serialized JSON
+            response.Content = CreateJsonContent(new JObject {
+                ["message"] = (string)contentAsJson["message"],
+                ["request_uri"] = Context.Request.RequestUri,
+                ["operation_id"] = Context.OperationId,
+                ["correlation_id"] = Context.CorrelationId,
+                ["content"] = await Context.Request.Content.ReadAsStringAsync()
+            }.ToString());
+
+            return response;
+```
  
- 2. Create Mock for UnitTest and Run Script.ExecuteAsync!!
-![image](https://user-images.githubusercontent.com/42938266/134378497-ce7ee6ee-1cd0-46bc-824e-63a5aaac97f2.png)
+ 2. Coding Mock for UnitTest and Run Script.ExecuteAsync!!
+```cs
+            Script script = new Script() {
+                //CancellationTokenの実装
+                CancellationToken = _cts.Token,
+                Context = moq.Object
+            };
+
+            var response = await script.ExecuteAsync();
+            Console.WriteLine(await response.Content.ReadAsStringAsync());        
+```
